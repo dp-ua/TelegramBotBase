@@ -15,17 +15,19 @@ import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 public class Bot extends TelegramLongPollingBot {
     private static final Logger log = Logger.getLogger(Bot.class);
 
-    final int RECONNECT_PAUSE =10000;
+    final int RECONNECT_PAUSE = 10000;
 
     @Setter
     @Getter
     String userName;
+    @Setter
+    @Getter
     String token;
 
     @Override
     public void onUpdateReceived(Update update) {
         // TODO: 11/18/2019 добавить обработку полученных сообщений
-        log.debug("new Update recieve");
+        log.debug("Receive new update");
     }
 
     @Override
