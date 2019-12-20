@@ -5,7 +5,7 @@ import com.example.telegrambot.command.ParsedCommand;
 import org.telegram.telegrambots.api.objects.Update;
 
 public abstract class AbstractHandler {
-    private Bot bot;
+    Bot bot;
 
     AbstractHandler(Bot bot) {
         this.bot = bot;
