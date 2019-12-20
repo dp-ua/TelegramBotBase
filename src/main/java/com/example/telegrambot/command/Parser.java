@@ -14,7 +14,8 @@ public class Parser {
     }
 
     public ParsedCommand getParsedCommand(String text) {
-        String trimText = text.trim();
+        String trimText = "";
+        if (text != null) trimText = text.trim();
         ParsedCommand result = new ParsedCommand(Command.NONE, trimText);
 
         if ("".equals(trimText)) return result;
