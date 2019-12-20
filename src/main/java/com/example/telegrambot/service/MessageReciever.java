@@ -58,7 +58,7 @@ public class MessageReciever implements Runnable {
 
         String operationResult = handlerForCommand.operate(chatId.toString(), parsedCommand, update);
 
-        if ("".equals(operationResult)) {
+        if (!"".equals(operationResult)) {
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
             message.setText(operationResult);

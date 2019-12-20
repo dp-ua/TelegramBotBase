@@ -6,7 +6,6 @@ import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendSticker;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
 public class MessageSender implements Runnable {
     private static final Logger log = Logger.getLogger(MessageSender.class);
@@ -54,11 +53,6 @@ public class MessageSender implements Runnable {
                 default:
                     log.warn("Cant detect type of object. " + object);
             }
-        } catch (TelegramApiException eT) {
-            TelegramApiRequestException telegramException = (TelegramApiRequestException) eT;
-            log.error("Cant send message. Obj:" + object +
-                    " error:[" + telegramException.getErrorCode() + "]," +
-                    " text: " + telegramException.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
