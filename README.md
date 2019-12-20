@@ -11,10 +11,12 @@ Starts the bot on the specified parameters "bot name" and "token"
 - When receiving update only logged the event is not taking any action.
 
 ##Part2 
+
 ### Handlers and Command
 - add special class for Command
 - add Parser for Command
 - add Handlers for Command
+
 ### Threads
 - Sender Thread
 - Receiver Thread
