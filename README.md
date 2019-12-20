@@ -10,7 +10,12 @@ Starts the bot on the specified parameters "bot name" and "token"
 - implement command botConnect. Register selected bot in TelegramAPI
 - When receiving update only logged the event is not taking any action.
 
-##Part2 Handlers
+##Part2 
+### Handlers and Command
 - add special class for Command
 - add Parser for Command
 - add Handlers for Command
+### Threads
+- Sender Thread
+- Receiver Thread
+- Sample of the operate command in a separate thread. Notify command and class 
