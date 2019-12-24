@@ -28,7 +28,7 @@ public class Notify implements Runnable {
         bot.sendQueue.add(getFirstMessage());
         try {
             Thread.sleep(delayInMillisec);
-            bot.sendQueue.add(getSecondSticker());
+            bot.sendQueue.add(Stickers.FUNNY_JIM_CARREY.getSendSticker(chatID));
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
@@ -37,13 +37,6 @@ public class Notify implements Runnable {
 
     private SendMessage getFirstMessage() {
         return new SendMessage(chatID, "I will send you notify after " + delayInMillisec / MILLISEC_IN_SEC + "sec");
-    }
-
-    private SendSticker getSecondSticker() {
-        SendSticker sendSticker = new SendSticker();
-        sendSticker.setSticker("CAADBQADiQMAAukKyAPZH7wCI2BwFxYE");
-        sendSticker.setChatId(chatID);
-        return sendSticker;
     }
 
     private SendMessage getSecondMessage() {

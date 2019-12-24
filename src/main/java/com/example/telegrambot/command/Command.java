@@ -6,4 +6,5 @@ public enum Command {
     NOTIFY,
     START, HELP, ID,
     TEXT_CONTAIN_EMOJI,
+    STICKER,
 }
