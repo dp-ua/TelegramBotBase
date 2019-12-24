@@ -4,10 +4,7 @@ import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
 import com.example.telegrambot.command.ParsedCommand;
 import com.example.telegrambot.command.Parser;
-import com.example.telegrambot.handler.AbstractHandler;
-import com.example.telegrambot.handler.DefaultHandler;
-import com.example.telegrambot.handler.NotifyHandler;
-import com.example.telegrambot.handler.SystemHandler;
+import com.example.telegrambot.handler.*;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
@@ -82,6 +79,10 @@ public class MessageReciever implements Runnable {
                 NotifyHandler notifyHandler = new NotifyHandler(bot);
                 log.info("Handler for command[" + command.toString() + "] is: " + notifyHandler);
                 return notifyHandler;
+            case TEXT_CONTAIN_EMOJI:
+                EmojiHandler emojiHandler = new EmojiHandler(bot);
+                log.info("Handler for command[" + command.toString() + "] is: " + emojiHandler);
+                return emojiHandler;
             default:
                 log.info("Handler for command[" + command.toString() + "] not Set. Return DefaultHandler");
                 return new DefaultHandler(bot);
