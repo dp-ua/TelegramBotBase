@@ -36,10 +36,6 @@ public class Parser {
             }
 
         }
-        if (result.getCommand() == Command.NONE) {
-            List<String> emojiContainsInText = EmojiParser.extractEmojis(result.getText());
-            if (emojiContainsInText.size() > 0) result.setCommand(Command.TEXT_CONTAIN_EMOJI);
-        }
         return result;
     }
 
