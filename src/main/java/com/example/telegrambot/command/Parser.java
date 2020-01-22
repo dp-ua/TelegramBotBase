@@ -1,11 +1,8 @@
 package com.example.telegrambot.command;
 
-import com.vdurmont.emoji.EmojiParser;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 public class Parser {
     private static final Logger log = LogManager.getLogger(Parser.class);
@@ -59,9 +56,16 @@ public class Parser {
     private Pair<String, String> getDelimitedCommandFromText(String trimText) {
         Pair<String, String> commandText;
 
-        if (trimText.contains(" ")) {
+        if (trimText.contains(" ") || trimText.contains("\n")) {
             int indexOfSpace = trimText.indexOf(" ");
-            commandText = new Pair<>(trimText.substring(0, indexOfSpace), trimText.substring(indexOfSpace + 1));
+            int indexOfNewLine = trimText.indexOf("\n");
+            int indexOfCommandEnd;
+            if (indexOfNewLine != -1 && indexOfSpace != -1)
+                indexOfCommandEnd = indexOfNewLine < indexOfSpace ? indexOfNewLine : indexOfSpace;
+            else if (indexOfNewLine != -1) indexOfCommandEnd = indexOfNewLine;
+            else indexOfCommandEnd = indexOfSpace;
+
+            commandText = new Pair<>(trimText.substring(0, indexOfCommandEnd), trimText.substring(indexOfCommandEnd + 1));
         } else commandText = new Pair<>(trimText, "");
         return commandText;
     }

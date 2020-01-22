@@ -15,6 +15,14 @@ public class ParserTest {
     }
 
     @Test
+    public void getParsedCommand_TestDescription() {
+        String text = "/testdescription\ntext";
+        ParsedCommand parsedCommandAndText = parser.getParsedCommand(text);
+        assertEquals(Command.TESTDESCRIPTION, parsedCommandAndText.command);
+        assertEquals("text", parsedCommandAndText.text);
+    }
+
+    @Test
     public void getParsedCommand_None() {
         String text = "just text";
         ParsedCommand parsedCommandAndText = parser.getParsedCommand(text);
