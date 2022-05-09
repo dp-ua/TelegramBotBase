@@ -5,7 +5,8 @@ import com.example.telegrambot.command.Command;
 import com.example.telegrambot.command.ParsedCommand;
 import com.example.telegrambot.command.Parser;
 import com.example.telegrambot.handler.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -13,7 +14,7 @@ import org.telegram.telegrambots.api.objects.stickers.Sticker;
 
 
 public class MessageReciever implements Runnable {
-    private static final Logger log = Logger.getLogger(MessageReciever.class);
+    private static final Logger log = LogManager.getLogger(MessageReciever.class);
     private final int WAIT_FOR_NEW_MESSAGE_DELAY = 1000;
     private Bot bot;
     private Parser parser;
@@ -29,7 +30,12 @@ public class MessageReciever implements Runnable {
         while (true) {
             for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
                 log.debug("New object for analyze in queue " + object.toString());
-                analyze(object);
+
+                try {
+                    analyze(object);
+                } catch (Exception e) {
+                    log.error("Exception in update analyze", e);
+                }
             }
             try {
                 Thread.sleep(WAIT_FOR_NEW_MESSAGE_DELAY);

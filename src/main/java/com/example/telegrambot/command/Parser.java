@@ -2,12 +2,13 @@ package com.example.telegrambot.command;
 
 import com.vdurmont.emoji.EmojiParser;
 import javafx.util.Pair;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class Parser {
-    private static final Logger log = Logger.getLogger(Parser.class);
+    private static final Logger log = LogManager.getLogger(Parser.class);
     private final String PREFIX_FOR_COMMAND = "/";
     private final String DELIMITER_COMMAND_BOTNAME = "@";
     private String botName;

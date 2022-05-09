@@ -2,13 +2,13 @@ package com.example.telegrambot.ability;
 
 import com.example.telegrambot.bot.Bot;
 import lombok.ToString;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.send.SendSticker;
 
 @ToString
 public class Notify implements Runnable {
-    private static final Logger log = Logger.getLogger(Notify.class);
+    private static final Logger log = LogManager.getLogger(Notify.class);
     private static final int MILLISEC_IN_SEC = 1000;
 
     Bot bot;

@@ -5,14 +5,15 @@ import com.example.telegrambot.command.ParsedCommand;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.objects.Update;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class EmojiHandler extends AbstractHandler {
-    private static final Logger log = Logger.getLogger(EmojiHandler.class);
+    private static final Logger log = LogManager.getLogger(EmojiHandler.class);
 
     public EmojiHandler(Bot bot) {
         super(bot);

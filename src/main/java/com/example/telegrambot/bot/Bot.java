@@ -3,7 +3,8 @@ package com.example.telegrambot.bot;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @NoArgsConstructor
 public class Bot extends TelegramLongPollingBot {
-    private static final Logger log = Logger.getLogger(Bot.class);
+    private static final Logger log = LogManager.getLogger(Bot.class);
     private final int RECONNECT_PAUSE = 10000;
 
     @Setter
@@ -30,6 +31,7 @@ public class Bot extends TelegramLongPollingBot {
     public Bot(String botName, String botToken) {
         this.botName = botName;
         this.botToken = botToken;
+        log.info("Bot name: " + botName);
     }
 
     @Override

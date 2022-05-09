@@ -3,12 +3,13 @@ package com.example.telegrambot.handler;
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
 import com.example.telegrambot.command.ParsedCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 
 public class SystemHandler extends AbstractHandler {
-    private static final Logger log = Logger.getLogger(SystemHandler.class);
+    private static final Logger log = LogManager.getLogger(SystemHandler.class);
     private final String END_LINE = "\n";
 
     public SystemHandler(Bot bot) {

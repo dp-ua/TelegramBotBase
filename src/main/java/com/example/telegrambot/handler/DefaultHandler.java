@@ -2,11 +2,12 @@ package com.example.telegrambot.handler;
 
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.ParsedCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.objects.Update;
 
 public class DefaultHandler extends AbstractHandler {
-    private static final Logger log = Logger.getLogger(DefaultHandler.class);
+    private static final Logger log = LogManager.getLogger(DefaultHandler.class);
 
     public DefaultHandler(Bot bot) {
         super(bot);

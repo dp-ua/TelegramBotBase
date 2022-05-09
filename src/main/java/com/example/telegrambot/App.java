@@ -3,19 +3,20 @@ package com.example.telegrambot;
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.service.MessageReciever;
 import com.example.telegrambot.service.MessageSender;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 
 public class App {
-    private static final Logger log = Logger.getLogger(App.class);
+    private static final Logger log = LogManager.getLogger(App.class);
     private static final int PRIORITY_FOR_SENDER = 1;
     private static final int PRIORITY_FOR_RECEIVER = 3;
     private static final String BOT_ADMIN = "321644283";
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
-        Bot test_habr_bot = new Bot("test_habr_bot", "1012522162:AAFZrajCVyKvPIQgTUMilj8l1P3ucjSAw8w");
+        Bot test_habr_bot = new Bot("test_habr_bot", "1012522162:AAGV7-y2pnK3vZkZwhsLf9ncWFx_jqfr_nM");
 
         MessageReciever messageReciever = new MessageReciever(test_habr_bot);
         MessageSender messageSender = new MessageSender(test_habr_bot);

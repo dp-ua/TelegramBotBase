@@ -3,11 +3,12 @@ package com.example.telegrambot.handler;
 import com.example.telegrambot.ability.Notify;
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.ParsedCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.objects.Update;
 
 public class NotifyHandler extends AbstractHandler {
-    private static final Logger log = Logger.getLogger(NotifyHandler.class);
+    private static final Logger log = LogManager.getLogger(NotifyHandler.class);
     private final int MILLISEC_IN_SEC = 1000;
     private String WRONG_INPUT_MESSAGE = "Wrong input. Time must be specified as an integer greater than 0";
 
