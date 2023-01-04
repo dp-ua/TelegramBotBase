@@ -5,7 +5,10 @@
     <groupId>com.example.telegrambot</groupId>
     <artifactId>telegramBotBase</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>base</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>telegramBotBase</name>
 
