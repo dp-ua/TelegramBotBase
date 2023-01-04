@@ -7,4 +7,7 @@ public enum Command {
     START, HELP, ID,
     TEXT_CONTAIN_EMOJI,
     STICKER,
+
+    // for tests
+    TESTDESCRIPTION,
 }
