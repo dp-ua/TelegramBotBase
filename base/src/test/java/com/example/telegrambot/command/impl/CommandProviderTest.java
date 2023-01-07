@@ -3,10 +3,10 @@ package com.example.telegrambot.command.impl;
 import com.example.telegrambot.command.CommandElement;
 import org.junit.Test;
 
-import static com.example.telegrambot.command.impl.CommandService.*;
+import static com.example.telegrambot.command.impl.CommandProvider.*;
 import static org.junit.Assert.*;
 
-public class CommandServiceTest {
+public class CommandProviderTest {
     CommandElement command;
 
     @Test

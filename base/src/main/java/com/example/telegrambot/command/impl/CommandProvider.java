@@ -2,18 +2,18 @@ package com.example.telegrambot.command.impl;
 
 import com.example.telegrambot.command.CommandElement;
 
-public enum CommandService implements CommandElement {
+public enum CommandProvider implements CommandElement {
     START, HELP,
     INTEXTCOMMAND("in text command",true);
     ;
     String command;
     boolean inText;
 
-    CommandService() {
+    CommandProvider() {
         command = this.toString().toLowerCase();
     }
 
-    CommandService(String command, boolean inText) {
+    CommandProvider(String command, boolean inText) {
         this.inText = inText;
         this.command = command;
     }
