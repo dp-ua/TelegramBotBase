@@ -13,13 +13,13 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.stickers.Sticker;
 
 
-public class MessageReciever implements Runnable {
-    private static final Logger log = LogManager.getLogger(MessageReciever.class);
+public class MessageReceiver implements Runnable {
+    private static final Logger log = LogManager.getLogger(MessageReceiver.class);
     private final int WAIT_FOR_NEW_MESSAGE_DELAY = 1000;
     private Bot bot;
     private Parser parser;
 
-    public MessageReciever(Bot bot) {
+    public MessageReceiver(Bot bot) {
         this.bot = bot;
         parser = new Parser(bot.getBotName());
     }

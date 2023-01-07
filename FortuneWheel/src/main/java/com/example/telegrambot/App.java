@@ -1,7 +1,7 @@
 package com.example.telegrambot;
 
 import com.example.telegrambot.bot.Bot;
-import com.example.telegrambot.service.MessageReciever;
+import com.example.telegrambot.service.MessageReceiver;
 import com.example.telegrambot.service.MessageSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +18,12 @@ public class App {
         ApiContextInitializer.init();
         Bot test_habr_bot = new Bot("test_habr_bot", "1012522162:AAGV7-y2pnK3vZkZwhsLf9ncWFx_jqfr_nM");
 
-        MessageReciever messageReciever = new MessageReciever(test_habr_bot);
+        MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot);
         MessageSender messageSender = new MessageSender(test_habr_bot);
 
         test_habr_bot.botConnect();
 
-        Thread receiver = new Thread(messageReciever);
+        Thread receiver = new Thread(messageReceiver);
         receiver.setDaemon(true);
         receiver.setName("MsgReciever");
         receiver.setPriority(PRIORITY_FOR_RECEIVER);
