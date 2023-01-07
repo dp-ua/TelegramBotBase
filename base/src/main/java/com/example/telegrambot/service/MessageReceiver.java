@@ -2,8 +2,8 @@ package com.example.telegrambot.service;
 
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
-import com.example.telegrambot.command.ParsedCommand;
-import com.example.telegrambot.command.Parser;
+import com.example.telegrambot.parser.ParsedCommand;
+import com.example.telegrambot.parser.Parser;
 import com.example.telegrambot.handler.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,10 +93,6 @@ public class MessageReceiver implements Runnable {
                 SystemHandler systemHandler = new SystemHandler(bot);
                 log.info("Handler for command[" + command.toString() + "] is: " + systemHandler);
                 return systemHandler;
-            case NOTIFY:
-                NotifyHandler notifyHandler = new NotifyHandler(bot);
-                log.info("Handler for command[" + command.toString() + "] is: " + notifyHandler);
-                return notifyHandler;
             case TEXT_CONTAIN_EMOJI:
                 EmojiHandler emojiHandler = new EmojiHandler(bot);
                 log.info("Handler for command[" + command.toString() + "] is: " + emojiHandler);

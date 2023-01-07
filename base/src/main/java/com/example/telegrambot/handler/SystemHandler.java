@@ -2,7 +2,7 @@ package com.example.telegrambot.handler;
 
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
-import com.example.telegrambot.command.ParsedCommand;
+import com.example.telegrambot.parser.ParsedCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;

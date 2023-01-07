@@ -1,5 +1,6 @@
-package com.example.telegrambot.command;
+package com.example.telegrambot.parser;
 
+import com.example.telegrambot.command.Command;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

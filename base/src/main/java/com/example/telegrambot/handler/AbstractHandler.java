@@ -1,7 +1,7 @@
 package com.example.telegrambot.handler;
 
 import com.example.telegrambot.bot.Bot;
-import com.example.telegrambot.command.ParsedCommand;
+import com.example.telegrambot.parser.ParsedCommand;
 import org.telegram.telegrambots.api.objects.Update;
 
 public abstract class AbstractHandler {

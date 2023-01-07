@@ -1,5 +1,6 @@
-package com.example.telegrambot.command;
+package com.example.telegrambot.parser;
 
+import com.example.telegrambot.command.Command;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

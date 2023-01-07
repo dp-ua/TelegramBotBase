@@ -1,7 +1,7 @@
 package com.example.telegrambot.handler;
 
 import com.example.telegrambot.bot.Bot;
-import com.example.telegrambot.command.ParsedCommand;
+import com.example.telegrambot.parser.ParsedCommand;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
