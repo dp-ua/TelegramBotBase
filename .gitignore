@@ -6,6 +6,7 @@ classes/
 
 #Idea
 .idea/
+*.iml
 
 # Log file
 *.log
