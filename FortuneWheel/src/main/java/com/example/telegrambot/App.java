@@ -21,7 +21,7 @@ public class App {
         MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot);
         MessageSender messageSender = new MessageSender(test_habr_bot);
 
-        test_habr_bot.botConnect();
+        test_habr_bot.connect();
 
         Thread receiver = new Thread(messageReceiver);
         receiver.setDaemon(true);

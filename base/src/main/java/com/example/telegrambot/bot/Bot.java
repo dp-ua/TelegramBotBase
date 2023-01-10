@@ -9,6 +9,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.generics.BotSession;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -52,10 +53,11 @@ public class Bot extends TelegramLongPollingBot {
         return botToken;
     }
 
-    public void botConnect() {
+    public BotSession connect() {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        BotSession botSession = null;
         try {
-            telegramBotsApi.registerBot(this);
+            botSession = telegramBotsApi.registerBot(this);
             log.info("[STARTED] TelegramAPI. Bot Connected. Bot class: " + this);
         } catch (TelegramApiRequestException e) {
             log.error("Cant Connect. Pause " + RECONNECT_PAUSE / 1000 + "sec and try again. Error: " + e.getMessage());
@@ -63,9 +65,10 @@ public class Bot extends TelegramLongPollingBot {
                 Thread.sleep(RECONNECT_PAUSE);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
-                return;
+                return null;
             }
-            botConnect();
+            connect();
         }
+        return botSession;
     }
 }
