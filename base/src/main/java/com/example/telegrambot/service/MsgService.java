@@ -9,7 +9,9 @@ import java.util.Map;
 
 public class MsgService {
 
-    private static final String LINE_END = "\n";
+    public static final String LINE_END = "\n";
+    public static final String PREFIX_FOR_COMMAND = "/";
+
 
     public MessageType getMessageType(Update update) {
         if (update.hasMessage()) return MessageType.MESSAGE;
@@ -36,7 +38,7 @@ public class MsgService {
             int indexOfNewLine = text.indexOf(LINE_END);
             int indexOfCommandEnd;
             if (indexOfNewLine != -1 && indexOfSpace != -1)
-                indexOfCommandEnd = indexOfNewLine < indexOfSpace ? indexOfNewLine : indexOfSpace;
+                indexOfCommandEnd = Math.min(indexOfNewLine, indexOfSpace);
             else if (indexOfNewLine != -1) indexOfCommandEnd = indexOfNewLine;
             else indexOfCommandEnd = indexOfSpace;
 
