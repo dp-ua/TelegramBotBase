@@ -1,6 +1,7 @@
 package com.example.telegrambot.service;
 
 import com.example.telegrambot.parser.MessageType;
+import com.google.common.base.Strings;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 
@@ -45,5 +46,26 @@ public class MsgService {
             commandText = new AbstractMap.SimpleImmutableEntry<>(text.substring(0, indexOfCommandEnd), text.substring(indexOfCommandEnd + 1));
         } else commandText = new AbstractMap.SimpleImmutableEntry<>(text, "");
         return commandText;
+    }
+
+    public boolean contains(String find, String where) {
+        if (Strings.isNullOrEmpty(find) || Strings.isNullOrEmpty(where)) return false;
+        if (find.split("\\w+").length == find.length()) return false;
+        return transformString(where)
+                .contains
+                        (transformString(find));
+    }
+
+    private String transformString(String where) {
+        String mask = "!.f&?";
+        String[] split = where.split("\\W+");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String word : split) {
+            stringBuilder
+                    .append(mask)
+                    .append(word)
+                    .append(mask);
+        }
+        return stringBuilder.toString();
     }
 }
