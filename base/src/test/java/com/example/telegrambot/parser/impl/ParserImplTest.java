@@ -12,7 +12,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.telegrambot.command.impl.CommandProvider.*;
+import static com.example.telegrambot.parser.impl.ParserImplTest.CommandMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -39,7 +39,6 @@ public class ParserImplTest {
 
     /* todo
         добавить тесты для команд внутри текста
-        заменить внешний класс команда на специальный для тестов
      */
 
     @Test
@@ -103,7 +102,7 @@ public class ParserImplTest {
 
     @Test
     public void shouldRecognize_START_clear_case6() {
-        mockMessageText("/start " + INTEXTCOMMAND.command());
+        mockMessageText("/start " + INTEXT.command());
         AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
         List<CommandElement> commands = updateAnalyse.getCommands();
         assertEquals(1, commands.size());
@@ -112,7 +111,7 @@ public class ParserImplTest {
 
     @Test
     public void shouldRecognize_START_clear_case7() {
-        mockMessageText("/start\n" + INTEXTCOMMAND.command());
+        mockMessageText("/start\n" + INTEXT.command());
         AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
         List<CommandElement> commands = updateAnalyse.getCommands();
         assertEquals(1, commands.size());
@@ -174,7 +173,7 @@ public class ParserImplTest {
 
     @Test
     public void shouldNotRecognize_START_with_WrongBotName_case2() {
-        mockMessageText("/start" + "@" + WRONG_BOTNAME + " " + INTEXTCOMMAND.command());
+        mockMessageText("/start" + "@" + WRONG_BOTNAME + " " + INTEXT.command());
         AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
         List<CommandElement> commands = updateAnalyse.getCommands();
         assertEquals(0, commands.size());
@@ -185,11 +184,36 @@ public class ParserImplTest {
         List<CommandElement> list = new ArrayList<>();
         list.add(START);
         list.add(HELP);
-        list.add(INTEXTCOMMAND);
+        list.add(INTEXT);
         return list;
     }
 
     private void mockMessageText(String text) {
         Mockito.when(message.getText()).thenReturn(text);
+    }
+
+    enum CommandMock implements CommandElement {
+
+        START("start", false),
+        HELP("help", false),
+        INTEXT("in text command", true);
+
+        String command;
+        boolean inText;
+
+        CommandMock(String command, boolean inText) {
+            this.command = command;
+            this.inText = inText;
+        }
+
+        @Override
+        public String command() {
+            return command;
+        }
+
+        @Override
+        public boolean isInTextCommand() {
+            return inText;
+        }
     }
 }
