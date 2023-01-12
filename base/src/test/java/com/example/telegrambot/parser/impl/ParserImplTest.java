@@ -3,6 +3,7 @@ package com.example.telegrambot.parser.impl;
 import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParserService;
+import com.example.telegrambot.service.MsgService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -36,10 +37,6 @@ public class ParserImplTest {
         parser.setBotName(BOTNAME);
         parser.setCommands(getCommands());
     }
-
-    /* todo
-        добавить тесты для команд внутри текста
-     */
 
     @Test
     public void shouldBeConstructed() {
@@ -179,6 +176,56 @@ public class ParserImplTest {
         assertEquals(0, commands.size());
     }
 
+    @Test
+    public void shouldRecognize_INTEXT_standalone() {
+        mockMessageText(INTEXT.command());
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(INTEXT, commands.get(0));
+    }
+
+    @Test
+    public void shouldRecognize_INTEXT_beetwen_noize_text_with_spaces() {
+        mockMessageText("noize " + INTEXT.command() + " noize");
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(INTEXT, commands.get(0));
+    }
+
+    @Test
+    public void shouldRecognize_INTEXT_beetwen_noize_text_with_spaces_case2() {
+        mockMessageText("noize " + INTEXT.command() + "? noize");
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(INTEXT, commands.get(0));
+    }
+
+    @Test
+    public void shouldNotRecognize_INTEXT_started_with_commandPrefix() {
+        mockMessageText(MsgService.PREFIX_FOR_COMMAND + INTEXT.command());
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(0, commands.size());
+    }
+
+    @Test
+    public void shouldNotRecognize_INTEXT_beetwen_noize_text_without_spaces() {
+        mockMessageText("noize" + INTEXT.command() + "noize");
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(0, commands.size());
+    }
+
+    @Test
+    public void shouldNotRecognize_INTEXT_with_WrongBotName_case2() {
+        mockMessageText("/start" + "@" + WRONG_BOTNAME + " " + INTEXT.command());
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(0, commands.size());
+    }
 
     private List<CommandElement> getCommands() {
         List<CommandElement> list = new ArrayList<>();
@@ -198,8 +245,8 @@ public class ParserImplTest {
         HELP("help", false),
         INTEXT("in text command", true);
 
-        String command;
-        boolean inText;
+        final String command;
+        final boolean inText;
 
         CommandMock(String command, boolean inText) {
             this.command = command;

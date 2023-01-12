@@ -73,7 +73,7 @@ public class ParserImpl implements ParserService {
             commands.stream()
                     .filter(CommandElement::isInTextCommand)
                     .forEach(element -> {
-                        if (preparedText.equals(element.command()) || preparedText.contains(element.command())) {
+                        if (preparedText.equals(element.command()) || msgService.contains(element.command(), preparedText)) {
                             result.add(element);
                         }
                     });
