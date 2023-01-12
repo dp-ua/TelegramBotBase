@@ -39,11 +39,21 @@ public class ParserImplTest {
 
     /* todo
         добавить тесты для команд внутри текста
+        заменить внешний класс команда на специальный для тестов
      */
 
     @Test
     public void shouldBeConstructed() {
         assertTrue(parser.isConstructed());
+    }
+
+    @Test
+    public void shouldRecognize_INTEXT_clear_case1() {
+        mockMessageText("/start");
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(START, commands.get(0));
     }
 
     @Test
