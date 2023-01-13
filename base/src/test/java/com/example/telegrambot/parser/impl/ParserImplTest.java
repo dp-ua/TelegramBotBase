@@ -13,7 +13,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.telegrambot.parser.impl.ParserImplTest.CommandMock.*;
+import static com.example.telegrambot.command.CommandMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -239,28 +239,4 @@ public class ParserImplTest {
         Mockito.when(message.getText()).thenReturn(text);
     }
 
-    enum CommandMock implements CommandElement {
-
-        START("start", false),
-        HELP("help", false),
-        INTEXT("in text command", true);
-
-        final String command;
-        final boolean inText;
-
-        CommandMock(String command, boolean inText) {
-            this.command = command;
-            this.inText = inText;
-        }
-
-        @Override
-        public String command() {
-            return command;
-        }
-
-        @Override
-        public boolean isInTextCommand() {
-            return inText;
-        }
-    }
 }
