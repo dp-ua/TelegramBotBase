@@ -16,7 +16,7 @@ public class App {
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
-        Bot test_habr_bot = new Bot("test_habr_bot", "1012522162:AAGV7-y2pnK3vZkZwhsLf9ncWFx_jqfr_nM");
+        Bot test_habr_bot = new Bot(System.getenv("test_bot_name"), System.getenv("test_bot_token"));
 
         MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot);
         MessageSender messageSender = new MessageSender(test_habr_bot);
