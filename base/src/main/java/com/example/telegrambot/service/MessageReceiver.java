@@ -31,21 +31,20 @@ public class MessageReceiver implements Runnable {
     public void run() {
         log.info("[STARTED] MsgReciever.  Bot class: " + bot);
         while (true) {
-            for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
-                log.debug("New object for analyze in queue " + object.toString());
+            try {
+                for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
+                    log.debug("New object for analyze in queue " + object.toString());
+                    analyze(object);
+                }
 
                 try {
-                    analyze(object);
-                } catch (Exception e) {
-                    log.error("Exception in update analyze", e);
+                    Thread.sleep(WAIT_FOR_NEW_MESSAGE_DELAY);
+                } catch (InterruptedException e) {
+                    log.error("Catch interrupt. Exit", e);
+                    return;
                 }
-            }
-            try {
-                //todo перейти на новый тип очереди без задержки
-                Thread.sleep(WAIT_FOR_NEW_MESSAGE_DELAY);
-            } catch (InterruptedException e) {
-                log.error("Catch interrupt. Exit", e);
-                return;
+            } catch (Exception e) {
+                log.error("Exception in Receiver. ", e);
             }
         }
     }
