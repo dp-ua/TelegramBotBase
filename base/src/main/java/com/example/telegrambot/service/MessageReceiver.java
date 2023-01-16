@@ -2,9 +2,12 @@ package com.example.telegrambot.service;
 
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
+import com.example.telegrambot.handler.AbstractHandler;
+import com.example.telegrambot.handler.DefaultHandler;
+import com.example.telegrambot.handler.EmojiHandler;
+import com.example.telegrambot.handler.SystemHandler;
 import com.example.telegrambot.parser.ParsedCommand;
 import com.example.telegrambot.parser.Parser;
-import com.example.telegrambot.handler.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -38,6 +41,7 @@ public class MessageReceiver implements Runnable {
                 }
             }
             try {
+                //todo перейти на новый тип очереди без задержки
                 Thread.sleep(WAIT_FOR_NEW_MESSAGE_DELAY);
             } catch (InterruptedException e) {
                 log.error("Catch interrupt. Exit", e);
@@ -70,7 +74,10 @@ public class MessageReceiver implements Runnable {
         }
 
         AbstractHandler handlerForCommand = getHandlerForCommand(parsedCommand.getCommand());
-        String operationResult = handlerForCommand.operate(chatId.toString(), parsedCommand, update);
+        String operationResult = null;
+        if (handlerForCommand.isConstructed()) {
+            operationResult = handlerForCommand.operate(chatId.toString(), parsedCommand, update);
+        }
 
         if (!"".equals(operationResult)) {
             SendMessage messageOut = new SendMessage();
@@ -83,23 +90,31 @@ public class MessageReceiver implements Runnable {
     private AbstractHandler getHandlerForCommand(Command command) {
         if (command == null) {
             log.warn("Null command accepted. This is not good scenario.");
-            return new DefaultHandler(bot);
+            return getDefaultHandler();
         }
         switch (command) {
             case START:
             case HELP:
             case ID:
             case STICKER:
-                SystemHandler systemHandler = new SystemHandler(bot);
+                SystemHandler systemHandler = new SystemHandler();
+                systemHandler.setBot(bot);
                 log.info("Handler for command[" + command.toString() + "] is: " + systemHandler);
                 return systemHandler;
             case TEXT_CONTAIN_EMOJI:
-                EmojiHandler emojiHandler = new EmojiHandler(bot);
+                EmojiHandler emojiHandler = new EmojiHandler();
+                emojiHandler.setBot(bot);
                 log.info("Handler for command[" + command.toString() + "] is: " + emojiHandler);
                 return emojiHandler;
             default:
                 log.info("Handler for command[" + command.toString() + "] not Set. Return DefaultHandler");
-                return new DefaultHandler(bot);
+                return getDefaultHandler();
         }
+    }
+
+    private DefaultHandler getDefaultHandler() {
+        DefaultHandler defaultHandler = new DefaultHandler();
+        defaultHandler.setBot(bot);
+        return defaultHandler;
     }
 }
