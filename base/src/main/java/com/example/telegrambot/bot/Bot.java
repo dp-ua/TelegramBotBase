@@ -11,8 +11,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.BotSession;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @NoArgsConstructor
 public class Bot extends TelegramLongPollingBot {
@@ -26,8 +26,8 @@ public class Bot extends TelegramLongPollingBot {
     @Setter
     private String botToken;
 
-    public final Queue<Object> sendQueue = new ConcurrentLinkedQueue<>();
-    public final Queue<Object> receiveQueue = new ConcurrentLinkedQueue<>();
+    public final BlockingQueue<Object> sendQueue = new LinkedBlockingQueue<>();
+    public final BlockingQueue<Object> receiveQueue = new LinkedBlockingQueue<>();
 
     public Bot(String botName, String botToken) {
         this.botName = botName;

@@ -18,9 +18,8 @@ import org.telegram.telegrambots.api.objects.stickers.Sticker;
 
 public class MessageReceiver implements Runnable {
     private static final Logger log = LogManager.getLogger(MessageReceiver.class);
-    private final int WAIT_FOR_NEW_MESSAGE_DELAY = 1000;
-    private Bot bot;
-    private Parser parser;
+    private final Bot bot;
+    private final Parser parser;
 
     public MessageReceiver(Bot bot) {
         this.bot = bot;
@@ -32,17 +31,13 @@ public class MessageReceiver implements Runnable {
         log.info("[STARTED] MsgReciever.  Bot class: " + bot);
         while (true) {
             try {
-                for (Object object = bot.receiveQueue.poll(); object != null; object = bot.receiveQueue.poll()) {
-                    log.debug("New object for analyze in queue " + object.toString());
-                    analyze(object);
-                }
+                Object message = bot.receiveQueue.take();
+                log.debug("New object for analyze in queue " + message.toString());
+                analyze(message);
 
-                try {
-                    Thread.sleep(WAIT_FOR_NEW_MESSAGE_DELAY);
-                } catch (InterruptedException e) {
-                    log.error("Catch interrupt. Exit", e);
-                    return;
-                }
+            } catch (InterruptedException e) {
+                log.error("Catch interrupt. Exit", e);
+                return;
             } catch (Exception e) {
                 log.error("Exception in Receiver. ", e);
             }

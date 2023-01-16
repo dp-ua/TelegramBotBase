@@ -9,8 +9,7 @@ import org.telegram.telegrambots.api.objects.Message;
 
 public class MessageSender implements Runnable {
     private static final Logger log = LogManager.getLogger(MessageSender.class);
-    private final int SENDER_SLEEP_TIME = 1000;
-    private Bot bot;
+    private final Bot bot;
 
     public MessageSender(Bot bot) {
         this.bot = bot;
@@ -19,21 +18,19 @@ public class MessageSender implements Runnable {
     @Override
     public void run() {
         log.info("[STARTED] MsgSender.  Bot class: " + bot);
-        try {
-            while (true) {
-                for (Object object = bot.sendQueue.poll(); object != null; object = bot.sendQueue.poll()) {
-                    log.debug("Get new msg to send " + object);
-                    send(object);
-                }
-                try {
-                    Thread.sleep(SENDER_SLEEP_TIME);
-                } catch (InterruptedException e) {
-                    log.error("Take interrupt while operate msg list", e);
-                }
+        while (true) {
+            try {
+                Object object = bot.sendQueue.take();
+                log.debug("Get new msg to send " + object);
+                send(object);
+            } catch (InterruptedException e) {
+                log.error("Take interrupt while operate msg list", e);
+                return;
+            } catch (Exception e) {
+                log.error(e);
             }
-        } catch (Exception e) {
-            log.error(e);
         }
+
     }
 
     private void send(Object object) {
