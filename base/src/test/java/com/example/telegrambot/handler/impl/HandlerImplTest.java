@@ -5,7 +5,6 @@ import com.example.telegrambot.handler.AbstractHandler;
 import com.example.telegrambot.handler.DefaultHandler;
 import com.example.telegrambot.handler.HandlerService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -26,10 +25,8 @@ public class HandlerImplTest {
         handlerService = new HandlerImpl(links);
     }
 
-    @Ignore
     @Test
-    public void test() {
-        //*     todo нужно поправить. Стандартный конструктор хендлера требует указывать бота
+    public void shouldGetCorrectHHandler_forCommand_Start() {
         AbstractHandler handler = handlerService.getHandler(START);
         assertEquals(DefaultHandler.class, handler.getClass());
     }

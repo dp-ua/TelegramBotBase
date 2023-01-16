@@ -1,6 +1,5 @@
 package com.example.telegrambot.handler;
 
-import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.command.Command;
 import com.example.telegrambot.parser.ParsedCommand;
 import org.apache.logging.log4j.LogManager;
@@ -11,10 +10,6 @@ import org.telegram.telegrambots.api.objects.Update;
 public class SystemHandler extends AbstractHandler {
     private static final Logger log = LogManager.getLogger(SystemHandler.class);
     private final String END_LINE = "\n";
-
-    public SystemHandler(Bot bot) {
-        super(bot);
-    }
 
     @Override
     public String operate(String chatId, ParsedCommand parsedCommand, Update update) {
