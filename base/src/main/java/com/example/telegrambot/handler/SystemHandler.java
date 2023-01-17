@@ -51,7 +51,7 @@ public class SystemHandler extends AbstractHandler {
         sendMessage.setChatId(chatID);
         sendMessage.enableMarkdown(true);
         StringBuilder text = new StringBuilder();
-        text.append("Hello. I'm  *").append(bot.getBotName()).append("*").append(END_LINE);
+        text.append("Hello. I'm  *").append(bot.getBotUsername()).append("*").append(END_LINE);
         text.append("I created specifically for resource habr.ru").append(END_LINE);
         text.append("All that I can do - you can see calling the command [/help](/help)");
         sendMessage.setText(text.toString());

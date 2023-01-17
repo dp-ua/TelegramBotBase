@@ -1,8 +1,11 @@
 package com.example.telegrambot;
 
 import com.example.telegrambot.bot.Bot;
+import com.example.telegrambot.parser.Parser;
 import com.example.telegrambot.service.MessageReceiver;
 import com.example.telegrambot.service.MessageSender;
+import com.example.telegrambot.service.MsgService;
+import com.example.telegrambot.service.QueueProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -16,9 +19,18 @@ public class App {
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
-        Bot test_habr_bot = new Bot(System.getenv("test_bot_name"), System.getenv("test_bot_token"));
+        String botName = System.getenv("test_bot_name");
+        String botToken = System.getenv("test_bot_token");
 
-        MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot);
+        MsgService msgService = new MsgService();
+        QueueProvider queueProvider = new QueueProvider();
+        msgService.setQueueProvider(queueProvider);
+        Parser parser = new Parser(botName);
+
+        Bot test_habr_bot = new Bot(botName, botToken);
+        test_habr_bot.setMsgService(msgService);
+
+        MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot, queueProvider.getReceiveQueue(), parser);
         MessageSender messageSender = new MessageSender(test_habr_bot);
 
         test_habr_bot.connect();
