@@ -3,17 +3,24 @@ package com.example.telegrambot.handler.impl;
 import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.handler.AbstractHandler;
 import com.example.telegrambot.handler.HandlerService;
+import com.example.telegrambot.service.Constructed;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
-public class HandlerImpl implements HandlerService {
+public class HandlerImpl implements HandlerService, Constructed {
 
     private final Map<CommandElement, Class<? extends AbstractHandler>> links;
 
     public HandlerImpl(@NotNull Map<CommandElement, Class<? extends AbstractHandler>> links) {
         this.links = links;
     }
+
+    @Override
+    public boolean isConstructed() {
+        return links != null && links.size() != 0;
+    }
+
 
     @Override
     public AbstractHandler getHandler(@NotNull CommandElement command) {

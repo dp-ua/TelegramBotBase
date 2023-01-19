@@ -4,6 +4,7 @@ import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.MessageType;
 import com.example.telegrambot.parser.ParserService;
+import com.example.telegrambot.service.Constructed;
 import com.example.telegrambot.service.MsgService;
 import com.google.common.base.Strings;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ParserImpl implements ParserService {
+public class ParserImpl implements ParserService, Constructed {
     private static final Logger log = LogManager.getLogger(ParserService.class);
     private final String DELIMITER_COMMAND_BOTNAME = "@";
     private final MsgService msgService = new MsgService();
@@ -23,6 +24,11 @@ public class ParserImpl implements ParserService {
     private String botName;
     private List<CommandElement> commands;
 
+    @Override
+    public boolean isConstructed() {
+        if (Strings.isNullOrEmpty(botName)) return false;
+        return commands != null && commands.size() != 0;
+    }
 
     @Override
     public void setBotName(String botName) {
@@ -104,13 +110,6 @@ public class ParserImpl implements ParserService {
         }
         return true;
     }
-
-    @Override
-    public boolean isConstructed() {
-        if (Strings.isNullOrEmpty(botName)) return false;
-        return commands != null && commands.size() != 0;
-    }
-
 
     private AnalyzeResult prepareClearAnalyzeResult(Update update) {
         AnalyzeResult result = new AnalyzeResult(update);

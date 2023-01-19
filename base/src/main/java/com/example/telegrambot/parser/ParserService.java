@@ -11,6 +11,4 @@ public interface ParserService {
     void setCommands(List<CommandElement> commands);
 
     AnalyzeResult getUpdateAnalyse(Update update);
-
-    boolean isConstructed();
 }

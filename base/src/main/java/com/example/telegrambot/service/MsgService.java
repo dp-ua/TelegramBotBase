@@ -12,7 +12,7 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-public class MsgService {
+public class MsgService implements Constructed {
     private static final Logger log = LogManager.getLogger(MsgService.class);
 
     public static final String LINE_END = "\n";
@@ -21,6 +21,7 @@ public class MsgService {
     @Setter
     QueueProvider queueProvider;
 
+    @Override
     public boolean isConstructed() {
         return queueProvider != null;
     }

@@ -7,12 +7,23 @@ import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendSticker;
 import org.telegram.telegrambots.api.objects.Message;
 
-public class MessageSender implements Runnable {
-    private static final Logger log = LogManager.getLogger(MessageSender.class);
-    private Bot bot;
+import java.util.concurrent.BlockingQueue;
 
-    public MessageSender(Bot bot) {
+public class MessageSender implements Runnable, Constructed {
+    private static final Logger log = LogManager.getLogger(MessageSender.class);
+    private final Bot bot;
+
+    private final BlockingQueue<Object> sendQueue;
+
+    public MessageSender(Bot bot, BlockingQueue<Object> sendQueue) {
         this.bot = bot;
+        this.sendQueue = sendQueue;
+    }
+
+    @Override
+    public boolean isConstructed() {
+        return bot != null &&
+                sendQueue != null;
     }
 
     @Override
@@ -20,7 +31,7 @@ public class MessageSender implements Runnable {
         log.info("[STARTED] MsgSender.  Bot class: " + bot);
         while (true) {
             try {
-                Object object = bot.sendQueue.take();
+                Object object = sendQueue.take();
                 log.debug("Get new msg to send " + object);
                 send(object);
             } catch (InterruptedException e) {

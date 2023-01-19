@@ -1,8 +1,8 @@
 package com.example.telegrambot.bot;
 
+import com.example.telegrambot.service.Constructed;
 import com.example.telegrambot.service.MsgService;
 import com.google.common.base.Strings;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @NoArgsConstructor
-public class Bot extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingBot implements Constructed {
     private static final Logger log = LogManager.getLogger(Bot.class);
     private final int RECONNECT_PAUSE = 10000;
     @Setter
@@ -28,6 +28,7 @@ public class Bot extends TelegramLongPollingBot {
     @Setter
     private String botToken;
 
+    @Override
     public final boolean isConstructed() {
         return !Strings.isNullOrEmpty(botName) &&
                 !Strings.isNullOrEmpty(botToken) &&

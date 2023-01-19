@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.generics.BotSession;
 
 public class App {
     private static final Logger log = LogManager.getLogger(App.class);
@@ -31,9 +32,10 @@ public class App {
         test_habr_bot.setMsgService(msgService);
 
         MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot, queueProvider.getReceiveQueue(), parser);
-        MessageSender messageSender = new MessageSender(test_habr_bot);
+        MessageSender messageSender = new MessageSender(test_habr_bot, queueProvider.getSendQueue());
 
-        test_habr_bot.connect();
+        BotSession connect = test_habr_bot.connect();
+        log.info("StartBotSession. Bot started. " + connect.toString());
 
         Thread receiver = new Thread(messageReceiver);
         receiver.setDaemon(true);

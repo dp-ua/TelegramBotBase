@@ -18,7 +18,7 @@ import org.telegram.telegrambots.api.objects.stickers.Sticker;
 import java.util.concurrent.BlockingQueue;
 
 
-public class MessageReceiver implements Runnable {
+public class MessageReceiver implements Runnable, Constructed {
     private static final Logger log = LogManager.getLogger(MessageReceiver.class);
     private final Bot bot;
     private final Parser parser;
@@ -31,7 +31,8 @@ public class MessageReceiver implements Runnable {
         this.parser = parser;
     }
 
-    public final boolean isConstructed() {
+    @Override
+    public boolean isConstructed() {
         return bot != null &&
                 parser != null &&
                 receiveQueue != null;
@@ -43,7 +44,7 @@ public class MessageReceiver implements Runnable {
         while (true) {
             try {
                 Object object = receiveQueue.take();
-                log.debug("New object for analyze in queue " + object.toString());
+                log.debug("New object for analyze in queue " + object);
                 analyze(object);
             } catch (InterruptedException e) {
                 log.error("Catch interrupt. Exit", e);
@@ -57,7 +58,7 @@ public class MessageReceiver implements Runnable {
     private void analyze(Object object) {
         if (object instanceof Update) {
             Update update = (Update) object;
-            log.debug("Update recieved: " + update.toString());
+            log.debug("Update recieved: " + update);
             analyzeForUpdateType(update);
         } else log.warn("Cant operate type of object: " + object.toString());
     }
@@ -103,15 +104,15 @@ public class MessageReceiver implements Runnable {
             case STICKER:
                 SystemHandler systemHandler = new SystemHandler();
                 systemHandler.setBot(bot);
-                log.info("Handler for command[" + command.toString() + "] is: " + systemHandler);
+                log.info("Handler for command[" + command + "] is: " + systemHandler);
                 return systemHandler;
             case TEXT_CONTAIN_EMOJI:
                 EmojiHandler emojiHandler = new EmojiHandler();
                 emojiHandler.setBot(bot);
-                log.info("Handler for command[" + command.toString() + "] is: " + emojiHandler);
+                log.info("Handler for command[" + command + "] is: " + emojiHandler);
                 return emojiHandler;
             default:
-                log.info("Handler for command[" + command.toString() + "] not Set. Return DefaultHandler");
+                log.info("Handler for command[" + command + "] not Set. Return DefaultHandler");
                 return getDefaultHandler();
         }
     }
