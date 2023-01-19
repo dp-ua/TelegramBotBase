@@ -1,17 +1,35 @@
 package com.example.telegrambot.service;
 
 import com.example.telegrambot.parser.MessageType;
+import com.google.common.base.Strings;
+import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 public class MsgService {
+    private static final Logger log = LogManager.getLogger(MsgService.class);
 
     public static final String LINE_END = "\n";
     public static final String PREFIX_FOR_COMMAND = "/";
 
+    @Setter
+    QueueProvider queueProvider;
+
+    public boolean isConstructed() {
+        return queueProvider != null;
+    }
+
+    public final void acceptMessage(Update update) {
+        BlockingQueue<Object> queue = queueProvider.getReceiveQueue();
+        queue.add(update);
+        log.debug("Receive new Update. Queue size: " + queue.size() + " updateID: " + update.getUpdateId());
+    }
 
     public MessageType getMessageType(Update update) {
         if (update.hasMessage()) return MessageType.MESSAGE;
@@ -45,5 +63,26 @@ public class MsgService {
             commandText = new AbstractMap.SimpleImmutableEntry<>(text.substring(0, indexOfCommandEnd), text.substring(indexOfCommandEnd + 1));
         } else commandText = new AbstractMap.SimpleImmutableEntry<>(text, "");
         return commandText;
+    }
+
+    public boolean contains(String find, String where) {
+        if (Strings.isNullOrEmpty(find) || Strings.isNullOrEmpty(where)) return false;
+        if (find.split("\\w+").length == find.length()) return false;
+        return transformString(where)
+                .contains
+                        (transformString(find));
+    }
+
+    private String transformString(String where) {
+        String mask = "!.f&?";
+        String[] split = where.split("\\W+");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String word : split) {
+            stringBuilder
+                    .append(mask)
+                    .append(word)
+                    .append(mask);
+        }
+        return stringBuilder.toString();
     }
 }

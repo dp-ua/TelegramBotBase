@@ -15,10 +15,6 @@ import java.util.Set;
 public class EmojiHandler extends AbstractHandler {
     private static final Logger log = LogManager.getLogger(EmojiHandler.class);
 
-    public EmojiHandler(Bot bot) {
-        super(bot);
-    }
-
     @Override
     public String operate(String chatId, ParsedCommand parsedCommand, Update update) {
         String text = parsedCommand.getText();

@@ -1,5 +1,7 @@
 package com.example.telegrambot.bot;
 
+import com.example.telegrambot.service.MsgService;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,23 +13,28 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.BotSession;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @NoArgsConstructor
 public class Bot extends TelegramLongPollingBot {
     private static final Logger log = LogManager.getLogger(Bot.class);
     private final int RECONNECT_PAUSE = 10000;
-
     @Setter
-    @Getter
+    MsgService msgService;
+    @Setter
     private String botName;
 
     @Setter
     private String botToken;
 
-    public final Queue<Object> sendQueue = new ConcurrentLinkedQueue<>();
-    public final Queue<Object> receiveQueue = new ConcurrentLinkedQueue<>();
+    public final boolean isConstructed() {
+        return !Strings.isNullOrEmpty(botName) &&
+                !Strings.isNullOrEmpty(botToken) &&
+                msgService != null;
+    }
+
+    public final BlockingQueue<Object> sendQueue = new LinkedBlockingQueue<>();
 
     public Bot(String botName, String botToken) {
         this.botName = botName;
@@ -37,8 +44,7 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        log.debug("Receive new Update. updateID: " + update.getUpdateId());
-        receiveQueue.add(update);
+        msgService.acceptMessage(update);
     }
 
     @Override
