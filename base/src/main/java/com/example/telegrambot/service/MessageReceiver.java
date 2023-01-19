@@ -40,7 +40,7 @@ public class MessageReceiver implements Runnable, Constructed {
 
     @Override
     public void run() {
-        log.info("[STARTED] MsgReciever.  Bot class: " + bot);
+        log.info("[STARTED] MsgReceiver.  Bot class: " + bot);
         while (true) {
             try {
                 Object object = receiveQueue.take();
@@ -58,7 +58,7 @@ public class MessageReceiver implements Runnable, Constructed {
     private void analyze(Object object) {
         if (object instanceof Update) {
             Update update = (Update) object;
-            log.debug("Update recieved: " + update);
+            log.debug("Update received: " + update);
             analyzeForUpdateType(update);
         } else log.warn("Cant operate type of object: " + object.toString());
     }
