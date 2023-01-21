@@ -59,11 +59,11 @@ public class MessageReceiver implements Runnable, Constructed {
         if (object instanceof Update) {
             Update update = (Update) object;
             log.debug("Update received: " + update);
-            analyzeForUpdateType(update);
+            analyzeUpdate(update);
         } else log.warn("Cant operate type of object: " + object.toString());
     }
 
-    private void analyzeForUpdateType(Update update) {
+    private void analyzeUpdate(Update update) {
         Message message = update.getMessage();
         Long chatId = message.getChatId();
 
