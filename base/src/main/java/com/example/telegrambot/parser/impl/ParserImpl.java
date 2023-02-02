@@ -72,7 +72,7 @@ public class ParserImpl implements ParserService, Constructed {
                 commands.stream()
                         .filter(element -> !element.isInTextCommand())
                         .forEach(element -> {
-                            if (element.command().equals(command)) result.add(element);
+                            if (getNormalize(element.command()).equals(getNormalize(command))) result.add(element);
                         });
             }
         } else {
@@ -85,6 +85,10 @@ public class ParserImpl implements ParserService, Constructed {
                     });
         }
         return result;
+    }
+
+    private static String getNormalize(String element) {
+        return element.toLowerCase();
     }
 
     private String prepareText(String text) {

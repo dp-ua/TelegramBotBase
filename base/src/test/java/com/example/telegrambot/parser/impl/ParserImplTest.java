@@ -117,6 +117,15 @@ public class ParserImplTest {
     }
 
     @Test
+    public void shouldRecognize_START_clear_case8() {
+        mockMessageText("/stARt\n");
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(START, commands.get(0));
+    }
+
+    @Test
     public void shouldRecognize_START_with_BotName_case1() {
         mockMessageText("/start" + "@" + BOTNAME);
         AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
