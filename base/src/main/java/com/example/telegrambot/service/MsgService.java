@@ -1,12 +1,15 @@
 package com.example.telegrambot.service;
 
+import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.MessageType;
 import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -14,8 +17,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class MsgService implements Constructed {
     private static final Logger log = LogManager.getLogger(MsgService.class);
-
-    public static final String LINE_END = "\n";
+    public static final String END_LINE = "\n";
     public static final String PREFIX_FOR_COMMAND = "/";
 
     @Setter
@@ -52,9 +54,9 @@ public class MsgService implements Constructed {
     public Map.Entry<String, String> parseBotCommandAndTextFromFullText(String text) {
         Map.Entry<String, String> commandText;
 
-        if (text.contains(" ") || text.contains(LINE_END)) {
+        if (text.contains(" ") || text.contains(END_LINE)) {
             int indexOfSpace = text.indexOf(" ");
-            int indexOfNewLine = text.indexOf(LINE_END);
+            int indexOfNewLine = text.indexOf(END_LINE);
             int indexOfCommandEnd;
             if (indexOfNewLine != -1 && indexOfSpace != -1)
                 indexOfCommandEnd = Math.min(indexOfNewLine, indexOfSpace);
@@ -85,5 +87,20 @@ public class MsgService implements Constructed {
                     .append(mask);
         }
         return stringBuilder.toString();
+    }
+
+    //todo Test me
+    public String getChatId(AnalyzeResult analyzeResult) {
+        // todo уметь вытаскивать айди чата из любого типа сообщений
+        throw new NotImplementedException();
+    }
+
+    //todo Test me
+    public void sendMessage(SendMessage message) {
+        try {
+            queueProvider.getSendQueue().put(message);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
