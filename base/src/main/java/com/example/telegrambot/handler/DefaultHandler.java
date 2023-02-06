@@ -1,6 +1,6 @@
 package com.example.telegrambot.handler;
 
-import com.example.telegrambot.bot.Bot;
+import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParsedCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +11,11 @@ public class DefaultHandler extends AbstractHandler {
 
     @Override
     public String operate(String chatId, ParsedCommand parsedCommand, Update update) {
+        return "";
+    }
+
+    @Override
+    public String operate(AnalyzeResult analyzeResult) {
         return "";
     }
 }

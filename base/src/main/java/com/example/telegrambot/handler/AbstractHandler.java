@@ -1,6 +1,7 @@
 package com.example.telegrambot.handler;
 
 import com.example.telegrambot.bot.Bot;
+import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParsedCommand;
 import com.example.telegrambot.service.MsgService;
 import lombok.Setter;
@@ -20,4 +21,6 @@ public abstract class AbstractHandler {
     }
 
     public abstract String operate(String chatId, ParsedCommand parsedCommand, Update update);
+
+    public abstract String operate(AnalyzeResult analyzeResult);
 }
