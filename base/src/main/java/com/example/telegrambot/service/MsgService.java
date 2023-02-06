@@ -95,7 +95,6 @@ public class MsgService implements Constructed {
         throw new NotImplementedException();
     }
 
-    //todo Test me
     public void sendMessage(SendMessage message) {
         try {
             queueProvider.getSendQueue().put(message);
