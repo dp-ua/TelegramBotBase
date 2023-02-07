@@ -40,10 +40,10 @@ public class MsgService implements Constructed {
     }
 
     // todo test me
-    public String getMessageText(Update update, MessageType messageType) {
-        switch (messageType) {
+    public String getMessageText(AnalyzeResult analyzeResult) {
+        switch (analyzeResult.getMessageType()) {
             case MESSAGE:
-                Message message = update.getMessage();
+                Message message = analyzeResult.getUpdate().getMessage();
                 if (message.hasText()) return message.getText();
                 break;
         }

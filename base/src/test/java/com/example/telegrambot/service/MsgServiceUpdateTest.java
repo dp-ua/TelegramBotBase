@@ -27,13 +27,18 @@ public class MsgServiceUpdateTest {
         msgService = new MsgService();
         analyzeResult = new AnalyzeResult(update);
 
-        Message message = mock(Message.class);
         User user = mock(User.class);
-
+        Message message = getMockMessage(user);
         when(update.getMessage()).thenReturn(message);
+    }
+
+    private static Message getMockMessage(User user) {
+        Message message = mock(Message.class);
         when(message.getFrom()).thenReturn(user);
         when(message.getText()).thenReturn(MESSAGE_TEXT);
+        when(message.hasText()).thenReturn(true);
         when(message.getChatId()).thenReturn(CHAT_ID_MESSAGE);
+        return message;
     }
 
     // todo FIX ME
@@ -44,5 +49,14 @@ public class MsgServiceUpdateTest {
 
         // then
         Assert.assertEquals(CHAT_ID_MESSAGE, msgService.getChatId(analyzeResult));
+    }
+
+    @Test
+    public void shouldGetMessageText_whenType_MESSAGE() {
+        // when
+        analyzeResult.setMessageType(MESSAGE);
+
+        // then
+        Assert.assertEquals(MESSAGE_TEXT, msgService.getMessageText(analyzeResult));
     }
 }

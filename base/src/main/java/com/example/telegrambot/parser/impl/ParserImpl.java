@@ -48,7 +48,7 @@ public class ParserImpl implements ParserService {
 
             switch (result.getMessageType()) {
                 case MESSAGE:
-                    String messageText = msgService.getMessageText(update, result.getMessageType());
+                    String messageText = msgService.getMessageText(result);
                     List<CommandElement> detectedCommands = getCommandsFromText(messageText);
                     result.setCommands(detectedCommands);
                     break;
