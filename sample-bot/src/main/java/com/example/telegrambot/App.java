@@ -26,7 +26,6 @@ public class App {
     private static final String BOT_ADMIN = "321644283";
 
     public static void main(String[] args) {
-        log.error("TEST");
         ApiContextInitializer.init();
         String botName = System.getenv("test_bot_name");
         String botToken = System.getenv("test_bot_token");
