@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -50,6 +49,17 @@ public class MsgService implements Constructed {
         throw new IllegalStateException("Can't get message text");
     }
 
+    //todo Test me
+    public String getChatId(AnalyzeResult analyzeResult) {
+        switch (analyzeResult.getMessageType()) {
+            case MESSAGE:
+                Message message = analyzeResult.getUpdate().getMessage();
+                if (message.hasText()) return Long.toString(message.getChatId());
+                break;
+        }
+        throw new IllegalStateException("Can't get message id");
+    }
+
     // todo test me
     public Map.Entry<String, String> parseBotCommandAndTextFromFullText(String text) {
         Map.Entry<String, String> commandText;
@@ -87,12 +97,6 @@ public class MsgService implements Constructed {
                     .append(mask);
         }
         return stringBuilder.toString();
-    }
-
-    //todo Test me
-    public String getChatId(AnalyzeResult analyzeResult) {
-        // todo уметь вытаскивать айди чата из любого типа сообщений
-        throw new NotImplementedException();
     }
 
     public void sendMessage(SendMessage message) {

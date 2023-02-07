@@ -41,14 +41,14 @@ public class MsgServiceUpdateTest {
         return message;
     }
 
-    // todo FIX ME
+    // todo need more tests
     @Test
     public void shouldGetChatId_whenType_MESSAGE() {
         // when
         analyzeResult.setMessageType(MESSAGE);
 
         // then
-        Assert.assertEquals(CHAT_ID_MESSAGE, msgService.getChatId(analyzeResult));
+        Assert.assertEquals(Long.toString(CHAT_ID_MESSAGE), msgService.getChatId(analyzeResult));
     }
 
     @Test
