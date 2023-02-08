@@ -1,45 +1,31 @@
 package com.example.telegrambot.service;
 
+import com.example.telegrambot.UpdateMock;
 import com.example.telegrambot.parser.AnalyzeResult;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.telegram.telegrambots.api.objects.Message;
-import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.api.objects.User;
 
 import static com.example.telegrambot.parser.MessageType.MESSAGE;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MsgServiceUpdateTest {
-    private static final String MESSAGE_TEXT = "Message text";
-    private static final long CHAT_ID_MESSAGE = 1000001l;
-    private static final long CHAT_ID_CALLBACK = 1000002l;
+public class MsgServiceUpdateTest extends UpdateMock {
+    protected static final String MESSAGE_TEXT = "Message text";
+    protected static final long CHAT_ID_MESSAGE = 1000001l;
     MsgService msgService;
-
-    Update update = mock(Update.class);
-
     AnalyzeResult analyzeResult;
 
     @Before
     public void setup() {
+        clearSetup();
+
         msgService = new MsgService();
         analyzeResult = new AnalyzeResult(update);
 
-        User user = mock(User.class);
-        Message message = getMockMessage(user);
+        tuneMessage(user, MESSAGE_TEXT, CHAT_ID_MESSAGE);
         when(update.getMessage()).thenReturn(message);
     }
 
-    private static Message getMockMessage(User user) {
-        Message message = mock(Message.class);
-        when(message.getFrom()).thenReturn(user);
-        when(message.getText()).thenReturn(MESSAGE_TEXT);
-        when(message.hasText()).thenReturn(true);
-        when(message.getChatId()).thenReturn(CHAT_ID_MESSAGE);
-        return message;
-    }
 
     // todo need more tests
     @Test
