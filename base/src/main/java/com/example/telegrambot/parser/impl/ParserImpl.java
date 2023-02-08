@@ -23,6 +23,11 @@ public class ParserImpl implements ParserService {
     private String botName;
     private List<CommandElement> commands;
 
+    @Override
+    public boolean isConstructed() {
+        if (Strings.isNullOrEmpty(botName)) return false;
+        return commands != null && commands.size() != 0;
+    }
 
     @Override
     public void setBotName(String botName) {
@@ -43,7 +48,7 @@ public class ParserImpl implements ParserService {
 
             switch (result.getMessageType()) {
                 case MESSAGE:
-                    String messageText = msgService.getMessageText(update, result.getMessageType());
+                    String messageText = msgService.getMessageText(result);
                     List<CommandElement> detectedCommands = getCommandsFromText(messageText);
                     result.setCommands(detectedCommands);
                     break;
@@ -66,7 +71,7 @@ public class ParserImpl implements ParserService {
                 commands.stream()
                         .filter(element -> !element.isInTextCommand())
                         .forEach(element -> {
-                            if (element.command().equals(command)) result.add(element);
+                            if (getNormalize(element.command()).equals(getNormalize(command))) result.add(element);
                         });
             }
         } else {
@@ -79,6 +84,10 @@ public class ParserImpl implements ParserService {
                     });
         }
         return result;
+    }
+
+    private static String getNormalize(String element) {
+        return element.toLowerCase();
     }
 
     private String prepareText(String text) {
@@ -104,13 +113,6 @@ public class ParserImpl implements ParserService {
         }
         return true;
     }
-
-    @Override
-    public boolean isConstructed() {
-        if (Strings.isNullOrEmpty(botName)) return false;
-        return commands != null && commands.size() != 0;
-    }
-
 
     private AnalyzeResult prepareClearAnalyzeResult(Update update) {
         AnalyzeResult result = new AnalyzeResult(update);

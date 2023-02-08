@@ -16,6 +16,12 @@ public class HandlerImpl implements HandlerService {
     }
 
     @Override
+    public boolean isConstructed() {
+        return links != null && links.size() != 0;
+    }
+
+
+    @Override
     public AbstractHandler getHandler(@NotNull CommandElement command) {
         if (links.containsKey(command)) {
             Class<? extends AbstractHandler> handlerClass = links.get(command);

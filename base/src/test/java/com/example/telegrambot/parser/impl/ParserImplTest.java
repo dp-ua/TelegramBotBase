@@ -3,6 +3,7 @@ package com.example.telegrambot.parser.impl;
 import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParserService;
+import com.example.telegrambot.service.Constructed;
 import com.example.telegrambot.service.MsgService;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class ParserImplTest {
 
     @Test
     public void shouldBeConstructed() {
-        assertTrue(parser.isConstructed());
+        assertTrue(((Constructed) parser).isConstructed());
     }
 
     @Test
@@ -109,6 +110,15 @@ public class ParserImplTest {
     @Test
     public void shouldRecognize_START_clear_case7() {
         mockMessageText("/start\n" + INTEXT.command());
+        AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
+        List<CommandElement> commands = updateAnalyse.getCommands();
+        assertEquals(1, commands.size());
+        assertEquals(START, commands.get(0));
+    }
+
+    @Test
+    public void shouldRecognize_START_clear_case8() {
+        mockMessageText("/stARt\n");
         AnalyzeResult updateAnalyse = parser.getUpdateAnalyse(update);
         List<CommandElement> commands = updateAnalyse.getCommands();
         assertEquals(1, commands.size());
