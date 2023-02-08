@@ -3,7 +3,8 @@ package com.example.telegrambot.builder;
 import com.example.telegrambot.bot.Bot;
 import com.example.telegrambot.service.MessageReceiver;
 import com.example.telegrambot.service.MessageSender;
-import jdk.internal.joptsimple.internal.Strings;
+import com.example.telegrambot.service.QueueProvider;
+import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,29 +25,26 @@ public class BotBuilder {
     @Setter
     private String botAdmin;
 
-    private boolean constructed = false;
-
     MessageReceiver messageReceiver;
     MessageSender messageSender;
 
+    QueueProvider queueProvider = new QueueProvider();
     Thread msgSender;
     Thread msgReceiver;
     BotSession botSession;
 
 /* todo вынести отдельно
-    -очереди отравления
-    -очереди приема
     -модуль статистики
  */
 /* todo подготовлено:
-    -вынесены треды сендера и ресивера. Нужно для подклчения отдельного модуля, который будет наблюдать за жизнью бота
+    -вынесены треды сендера и ресивера. Нужно для подключения отдельного модуля, который будет наблюдать за жизнью бота
     -бот сессия. так же вынесена, по ней можно так же вести лайвлог
  */
 
     public BotBuilder build() {
 
-        messageReceiver = new MessageReceiver(bot);
-        messageSender = new MessageSender(bot);
+        messageReceiver = new MessageReceiver(bot, queueProvider);
+        messageSender = new MessageSender(bot, queueProvider.getSendQueue());
 
         return null;
     }
@@ -64,7 +62,7 @@ public class BotBuilder {
     }
 
     public void start() throws IllegalComponentStateException {
-        if (!constructed) {
+        if (!isConstructed()) {
             log.error("BotBuilder didn't construct");
             throw new IllegalComponentStateException("BotBuilder didn't construct");
         }
@@ -73,11 +71,15 @@ public class BotBuilder {
         msgSender = startSender();
         msgReceiver = startReceiver();
 
-        ApiContextInitializer.init();
-
         botSession = bot.connect();
 
         sendStartReport(bot);
+    }
+
+    private boolean isConstructed() {
+        // todo нужно предумать механизм, как мы будем чекать все ли добавлено
+        // и можно ли как-то использоваться еще флаг Constructed
+        return false;
     }
 
     private void sendStartReport(Bot bot) {
