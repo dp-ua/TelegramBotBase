@@ -1,6 +1,6 @@
 package com.example.telegrambot.handler;
 
-import com.example.telegrambot.bot.Bot;
+import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParsedCommand;
 import com.vdurmont.emoji.Emoji;
 import com.vdurmont.emoji.EmojiManager;
@@ -30,5 +30,10 @@ public class EmojiHandler extends AbstractHandler {
             result.append(emoji).append("\n");
         }
         return result.toString();
+    }
+
+    @Override
+    public String operate(AnalyzeResult analyzeResult) {
+        return null;
     }
 }

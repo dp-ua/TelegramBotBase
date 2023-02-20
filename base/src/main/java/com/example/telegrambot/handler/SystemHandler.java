@@ -1,6 +1,7 @@
 package com.example.telegrambot.handler;
 
 import com.example.telegrambot.command.Command;
+import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.ParsedCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,11 @@ public class SystemHandler extends AbstractHandler {
                 return "StickerID: " + parsedCommand.getText();
         }
         return "";
+    }
+
+    @Override
+    public String operate(AnalyzeResult analyzeResult) {
+        return null;
     }
 
     private SendMessage getMessageHelp(String chatID) {

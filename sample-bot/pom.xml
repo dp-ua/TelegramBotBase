@@ -9,34 +9,29 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>com.example.telegrambot</groupId>
-    <artifactId>base</artifactId>
+    <artifactId>sample-bot</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>base</name>
-
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>sample-bot</name>
 
     <dependencies>
-<!--        todo remove when no need more-->
         <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vdurmont</groupId>
-            <artifactId>emoji-java</artifactId>
-            <version>${com.vdurmont.emoji-java.version}</version>
+            <groupId>com.example.telegrambot</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
             <version>${org.telegram.telegrambots.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vdurmont</groupId>
+            <artifactId>emoji-java</artifactId>
+            <version>${com.vdurmont.emoji-java.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -73,5 +68,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 
 </project>

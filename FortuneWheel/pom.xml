@@ -2,26 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>telegramBotBase</artifactId>
         <groupId>com.example.telegrambot</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <dependencies>
-        <dependency>
-            <groupId>com.example.telegrambot</groupId>
-            <artifactId>base</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-    <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.example.telegrambot</groupId>
     <artifactId>FortuneWheel</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>Fortune-wheel</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example.telegrambot</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

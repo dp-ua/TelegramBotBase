@@ -4,7 +4,6 @@ import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.parser.AnalyzeResult;
 import com.example.telegrambot.parser.MessageType;
 import com.example.telegrambot.parser.ParserService;
-import com.example.telegrambot.service.Constructed;
 import com.example.telegrambot.service.MsgService;
 import com.google.common.base.Strings;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ParserImpl implements ParserService, Constructed {
+public class ParserImpl implements ParserService {
     private static final Logger log = LogManager.getLogger(ParserService.class);
     private final String DELIMITER_COMMAND_BOTNAME = "@";
     private final MsgService msgService = new MsgService();
@@ -49,7 +48,7 @@ public class ParserImpl implements ParserService, Constructed {
 
             switch (result.getMessageType()) {
                 case MESSAGE:
-                    String messageText = msgService.getMessageText(update, result.getMessageType());
+                    String messageText = msgService.getMessageText(result);
                     List<CommandElement> detectedCommands = getCommandsFromText(messageText);
                     result.setCommands(detectedCommands);
                     break;
@@ -72,7 +71,7 @@ public class ParserImpl implements ParserService, Constructed {
                 commands.stream()
                         .filter(element -> !element.isInTextCommand())
                         .forEach(element -> {
-                            if (element.command().equals(command)) result.add(element);
+                            if (getNormalize(element.command()).equals(getNormalize(command))) result.add(element);
                         });
             }
         } else {
@@ -85,6 +84,10 @@ public class ParserImpl implements ParserService, Constructed {
                     });
         }
         return result;
+    }
+
+    private static String getNormalize(String element) {
+        return element.toLowerCase();
     }
 
     private String prepareText(String text) {

@@ -3,12 +3,11 @@ package com.example.telegrambot.handler.impl;
 import com.example.telegrambot.command.CommandElement;
 import com.example.telegrambot.handler.AbstractHandler;
 import com.example.telegrambot.handler.HandlerService;
-import com.example.telegrambot.service.Constructed;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
-public class HandlerImpl implements HandlerService, Constructed {
+public class HandlerImpl implements HandlerService {
 
     private final Map<CommandElement, Class<? extends AbstractHandler>> links;
 

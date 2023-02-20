@@ -31,7 +31,7 @@ public class App {
         Bot test_habr_bot = new Bot(botName, botToken);
         test_habr_bot.setMsgService(msgService);
 
-        MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot, queueProvider.getReceiveQueue(), parser);
+        MessageReceiver messageReceiver = new MessageReceiver(test_habr_bot, queueProvider);
         MessageSender messageSender = new MessageSender(test_habr_bot, queueProvider.getSendQueue());
 
         BotSession connect = test_habr_bot.connect();
